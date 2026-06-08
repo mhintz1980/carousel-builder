@@ -41,7 +41,12 @@ Two MCP servers, both connected in Claude Code:
 | **Higgsfield MCP** | Image + video generation (cover + pillar images). Uses the `nano_banana_2` model. | **[Get Higgsfield MCP access →](https://higgsfield.ai/s/higgsfield-mcp-ig-charlieautomates-dBaWAw)** |
 | **Canva MCP** | Duplicates your template and edits text + image fills in place. | Add `https://mcp.canva.com/mcp` as an `http` MCP server, then run `/mcp` and authenticate. |
 
-You also need an 8-page Canva carousel template you own (see Setup below). A reference deck to recreate is included in `examples/template-reference/`.
+You also need an 8-page Canva carousel template you own (see Setup below). **The exact reference deck is bundled in this repo** at `examples/template-reference/` (8 PNGs) — recreate it in Canva and you have a matching template.
+
+> ### 🚀 Don't have the template, a brand voice file, or a voice fingerprint yet?
+> No problem. All of it ships pre-installed and pre-configured in **Charlie OS** — the one-click Claude Code setup I actually used to *build* this workflow. The Canva template, the brand context, the voice fingerprint, Higgsfield + Canva wired up, and dozens of other skills are already there on day one.
+>
+> **See if Charlie OS is a fit → [charlieautomates.com/charlie-os-vs](https://charlieautomates.com/charlie-os-vs/)**
 
 ---
 
@@ -85,6 +90,8 @@ Open `commands/carousel.md` and `commands/short-form-caption.md` and replace the
 | `<YOUR_VOICE_FILE>` | Path to your voice fingerprint for captions. Start from `config/voice-fingerprint.example.md`. |
 
 Then customize the fallback CTA table in `short-form-caption.md` with your own lead magnets.
+
+**Want to skip all of this?** Charlie OS installs the template, brand context, and voice fingerprint for you, already configured. [charlieautomates.com/charlie-os-vs](https://charlieautomates.com/charlie-os-vs/)
 
 ---
 
