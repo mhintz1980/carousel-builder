@@ -73,11 +73,14 @@ Then capture the system in the template's shape — a topic broken into pillars,
 Ask these as one grouped question. Do not start generating until answered.
 
 ### Step 2 — Cover image (Higgsfield, 4:5) — this becomes the THEME ANCHOR
-1. Ask: **"Drop reference image(s) for the slide-1 vibe, or describe the aesthetic. I'll generate a few options."**
-2. Generate **3–4 cover options** with `mcp__higgsfield__generate_image`, `model: "nano_banana_2"`, `aspect_ratio: "4:5"`, `resolution: "2k"`, `count: 1` each, fired in ONE parallel batch. Generate a **clean visual with NO baked-in text** (text goes on as a Canva overlay later).
-3. Poll with `mcp__higgsfield__job_status` (`sync: true`). Download each via `results.rawUrl`, Read them, present to the user.
-4. User picks one ("I pick one"). **The chosen cover is the theme anchor for every pillar image.** Upload it via `mcp__higgsfield__media_upload` → `mcp__higgsfield__media_confirm` to get a `media_id`; hold onto it.
-5. Ask: **"Add text to the cover, or leave it bare?"** If add → collect the two-part headline + the 3–4 line subtext block (within the cover budgets above). This text becomes the page-1 Canva overlay; if "bare", remove the template's page-1 text elements.
+**Ask BOTH of these FIRST, before generating anything:**
+1. **Reference images:** **"Do you have reference image(s) you want slide 1 to copy from (style, palette, subject)? Drop them, or describe the aesthetic and I'll generate from scratch."** If they drop references, upload EACH via `mcp__higgsfield__media_upload` → `mcp__higgsfield__media_confirm`, collect the `media_id`s, and pass them as `medias: [{value: "<ref_media_id>", role: "image"}]` on the cover generation so the options actually copy from them (end the prompt with *"Match the style, palette, and composition of the provided reference image(s)."*). Don't skip this — the references must be wired into the generation, not just acknowledged.
+2. **Text or bare:** **"Will the cover have a text overlay (two-part headline + 3–4 italic subtext lines), or stay bare?"** If text → collect the headline + subtext now (within the cover budgets above); it becomes the page-1 Canva overlay. If bare → the page-1 text elements get deleted later. Capture this decision before generating so the image is built to suit.
+
+Then generate:
+3. Generate **3–4 cover options** with `mcp__higgsfield__generate_image`, `model: "nano_banana_2"`, `aspect_ratio: "4:5"`, `resolution: "2k"`, `count: 1` each, fired in ONE parallel batch (include the reference `medias` from step 1 if provided). Generate a **clean visual with NO baked-in text** (text goes on as a Canva overlay later, even when "text" was chosen).
+4. Poll with `mcp__higgsfield__job_status` (`sync: true`). Download each via `results.rawUrl`, Read them, present to the user.
+5. **User approves/picks one. This pick is the slide-1 approval gate.** The chosen cover is the **theme anchor for EVERY pillar image** — nothing in Step 4 generates until this is approved. Upload the chosen cover via `mcp__higgsfield__media_upload` → `mcp__higgsfield__media_confirm` to get its `media_id`; hold onto it (this is the anchor `media_id` Step 4 requires).
 
 ### Step 3 — Draft the MD, get approval (NO image gen yet)
 Write `content/carousels/{topic-slug}/{topic-slug}.md`. For every slide include the copy AND a live character count so the user can see budget compliance:
@@ -111,9 +114,9 @@ Write `content/carousels/{topic-slug}/{topic-slug}.md`. For every slide include 
 Mark the orange-highlight word with `[brackets]`. Flag any line over budget in RED and fix before continuing. Pull voice from the brand-context file. **Show the draft and WAIT for approval or edits.**
 
 ### Step 4 — Generate the 16:9 pillar images (Higgsfield, THEME-LOCKED)
-For each pillar slide, generate one **16:9** image with `model: "nano_banana_2"`, `resolution: "2k"`, `count: 1`. Fire ALL pillar generations in ONE parallel batch for consistency.
+**Precondition: the slide-1 cover MUST be approved (Step 2.5) and its `media_id` captured. Never generate pillar images before slide 1 is approved.** For each pillar slide, generate one **16:9** image with `model: "nano_banana_2"`, `resolution: "2k"`, `count: 1`. Fire ALL pillar generations in ONE parallel batch for consistency.
 
-**Theme-lock rule (mandatory — this is the whole point of the redesign):** pass the chosen cover's `media_id` from Step 2 as `medias: [{value: "<cover_media_id>", role: "image"}]` on EVERY pillar generation, and end each prompt with: *"Match the color palette, lighting, art style, texture, and mood of the provided reference image exactly. Change only the subject described above."* This forces every middle image to inherit the cover's aesthetic. Without it the deck drifts.
+**Theme-lock rule (mandatory, NO exceptions — this is the whole point of the redesign):** EVERY pillar image is ALWAYS based off the approved slide-1 cover. Pass the chosen cover's anchor `media_id` from Step 2 as `medias: [{value: "<cover_media_id>", role: "image"}]` on EVERY pillar generation, and end each prompt with: *"Match the color palette, lighting, art style, texture, and mood of the provided reference image exactly. Change only the subject described above."* This forces every middle image to inherit the cover's aesthetic. Without it the deck drifts. If the anchor `media_id` is missing, go back to Step 2 — do not generate pillars from a bare prompt.
 
 Generate clean images — **do NOT bake a glow into the prompt.** The glow is a Canva element effect on the template's image frame; replacing the fill inside the frame keeps it. Poll, download to `slides/`, Read each to confirm no garbled artifacts. Regenerate just the bad ones.
 
