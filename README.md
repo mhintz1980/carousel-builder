@@ -41,7 +41,18 @@ Two MCP servers, both connected in Claude Code:
 | **Higgsfield MCP** | Image + video generation (cover + pillar images). Uses the `nano_banana_2` model. | **[Get Higgsfield MCP access →](https://higgsfield.ai/s/higgsfield-mcp-ig-charlieautomates-dBaWAw)** |
 | **Canva MCP** | Duplicates your template and edits text + image fills in place. | Add `https://mcp.canva.com/mcp` as an `http` MCP server, then run `/mcp` and authenticate. |
 
-You also need an 8-page Canva carousel template you own (see Setup below). **The exact reference deck is bundled in this repo** at `examples/template-reference/` (8 PNGs) — recreate it in Canva and you have a matching template.
+You also need an 8-page Canva carousel template you own (see Setup below).
+
+> ### 🎨 Grab the ready-made template (fastest path)
+> Open this link and Canva drops a copy straight into your account:
+>
+> **[canva.link/ydtbp6ujxt22m19](https://canva.link/ydtbp6ujxt22m19)**
+>
+> Once it's in your Canva, hand the **design ID + the link back to your Claude** so it knows exactly what to duplicate and run off of. No rebuilding from scratch.
+
+Prefer to build your own? **The exact reference deck is also bundled in this repo** at `examples/template-reference/` (8 PNGs) — recreate it in Canva and you have a matching template.
+
+> **You're not locked to this template.** Once you're comfortable, build your own decks in Canva with different layouts, character budgets, or aesthetics and train the `/carousel` skill on them — point it at the new template ID and update the anatomy + budgets to match. The skill runs off whatever template you give it.
 
 > ### 🚀 Don't have the template, a brand voice file, or a voice fingerprint yet?
 > No problem. All of it ships pre-installed and pre-configured in **Charlie OS** — the one-click Claude Code setup I actually used to *build* this workflow. The Canva template, the brand context, the voice fingerprint, Higgsfield + Canva wired up, and dozens of other skills are already there on day one.
@@ -84,7 +95,7 @@ Open `commands/carousel.md` and `commands/short-form-caption.md` and replace the
 
 | Placeholder | Set it to |
 |---|---|
-| `<YOUR_CANVA_TEMPLATE_ID>` | The design ID of **your** 8-page Canva carousel template. Recreate the layout in `examples/template-reference/` (8 PNGs) inside Canva, then copy its design ID. The template and the example folder must match 1:1. |
+| `<YOUR_CANVA_TEMPLATE_ID>` | The design ID of your 8-page Canva carousel template. **Fastest:** open **[canva.link/ydtbp6ujxt22m19](https://canva.link/ydtbp6ujxt22m19)** to copy the ready-made template into your Canva, then paste its design ID + link here so Claude knows what to duplicate. Or recreate the layout from `examples/template-reference/` (8 PNGs) yourself — just keep template and example folder 1:1. You can also swap in your own templates later with different criteria. |
 | `<YOUR_BRAND_VOICE_FILE>` | Path to your brand context file. Start from `config/brand-context.example.md`. |
 | `<YOUR_HANDLE>` | Your Instagram handle for the closer slide. |
 | `<YOUR_VOICE_FILE>` | Path to your voice fingerprint for captions. Start from `config/voice-fingerprint.example.md`. |

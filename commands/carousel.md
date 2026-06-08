@@ -12,7 +12,7 @@ This command drives two MCP servers and one Canva template you control. Fill the
 
 | Placeholder | What to set it to |
 |---|---|
-| `<YOUR_CANVA_TEMPLATE_ID>` | The design ID of **your own** 8-page Canva carousel template. Recreate the anatomy in `examples/template-reference/` (8 PNGs shipped with this repo) inside Canva, then grab its design ID. The template and the example folder must match 1:1. |
+| `<YOUR_CANVA_TEMPLATE_ID>` | The design ID of your 8-page Canva carousel template. **Fastest path:** open <https://canva.link/ydtbp6ujxt22m19> — Canva copies the ready-made template into your account — then paste its design ID + the link back to Claude so it knows what to duplicate and run off of. Or recreate the anatomy in `examples/template-reference/` (8 PNGs shipped with this repo) yourself; keep template and example folder 1:1. You can also point this at your own templates later (different layout/budgets/aesthetic) — just update the anatomy + character budgets below to match. |
 | `<YOUR_BRAND_VOICE_FILE>` | Path to your brand/voice context file. See `config/brand-context.example.md` for the shape. |
 | `<YOUR_HANDLE>` | Your Instagram handle for the closer slide (e.g. `@charlieautomates`). |
 
@@ -25,7 +25,7 @@ This command drives two MCP servers and one Canva template you control. Fill the
 ## Framework constants (do not invent — these are the source of truth)
 
 - **Canonical example deck (ALWAYS load as the framework):** `examples/template-reference/` — 8 PNGs (`1.png`–`8.png`). Read these images at the start of every run so you mirror the exact layout, two-tone headline, orange highlight, glow image, and CAPS-word body pattern. This folder is the reference whenever you are unsure what a slide should look like.
-- **Canva template (duplicate this every time):** design ID `<YOUR_CANVA_TEMPLATE_ID>`, an 8-page carousel template. The example folder above is literally this template exported, so they match 1:1.
+- **Canva template (duplicate this every time):** design ID `<YOUR_CANVA_TEMPLATE_ID>`, an 8-page carousel template. The example folder above is literally this template exported, so they match 1:1. Don't have it yet? Grab the ready-made one at <https://canva.link/ydtbp6ujxt22m19> (opens a copy in your Canva), then set the ID above. The skill will also run off any custom template you build with different criteria — just keep its anatomy + budgets in sync with what's below.
 - **Output root:** `content/carousels/{topic-slug}/` — one folder per carousel (relative to your project root).
 - **Brand voice fallback:** `<YOUR_BRAND_VOICE_FILE>`.
 - **Higgsfield model:** `nano_banana_2` (Nano Banana Pro). Never the deprecated standalone `nano-banana` MCP.
@@ -53,7 +53,13 @@ Why this matters: the Canva text boxes are sized for these lengths. Go over and 
 ## Workflow (interview-first, approval-gated)
 
 ### Step 0 — Load the framework
-Read all 8 PNGs in `examples/template-reference/`. Internalize: light grid background, dark headline with one orange word, top-left red swipe-up arrow + bottom-right orange next arrow (these belong to the template — keep them), centered 16:9 image with a soft glow, dark body line with a trailing CAPS word.
+**Template check first.** If `<YOUR_CANVA_TEMPLATE_ID>` is still the placeholder (not yet replaced with a real design ID), STOP and tell the user, verbatim:
+
+> You need a Canva template before I can assemble the deck. Grab the ready-made one here: **https://canva.link/ydtbp6ujxt22m19** — opening it drops a copy into your own Canva. Then paste me the **design ID + the link** and I'll duplicate that every run. (You can also point me at any other template you build with your own layout/budgets/aesthetic — just tell me what changed.)
+
+Wait for the ID before continuing. Once you have it, use it as the template for the rest of this run (and offer to save it into this command so they only do it once).
+
+Then read all 8 PNGs in `examples/template-reference/`. Internalize: light grid background, dark headline with one orange word, top-left red swipe-up arrow + bottom-right orange next arrow (these belong to the template — keep them), centered 16:9 image with a soft glow, dark body line with a trailing CAPS word.
 
 ### Step 1 — Interview the idea
 If `$ARGUMENTS` is empty, ask: **"What's the carousel about?"**
